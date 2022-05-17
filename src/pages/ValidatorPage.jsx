@@ -12,13 +12,34 @@ const ValidatorPage = () => {
         firstnameError: null,
         startDateError: null,
         endDateError: null,
+        startEndDateError: null
     })
+    const customHandler = (data, type, Error,) => {
+
+        let error = ""
+        for (let i = 0; i < type.length; i++) {
+            if (type.includes(V_Type.required) && data === "") {
+                error = (<div className='invalid-feedback'>{Error[type.indexOf(V_Type.required)]}</div>);
+                break;
+            }
+            if (type.includes(V_Type.capitalize) && data !== data.toUpperCase()) {
+                error = (<div className='invalid-feedback'>{Error[type.indexOf(V_Type.capitalize)]}</div>);
+                break;
+            }
+            if (type.includes("length5") && data.length > 5) {
+                error = (<div className='invalid-feedback'>{Error[type.indexOf("length5")]}</div>);
+                break;
+            }
+        }
+        return error
+    }
     const setValidation = () => {
         let myvalidation_Obj = {
             ...MyvalidationModel,
-            firstnameError: MyValidator(formModel.firstname, [V_Type.required, V_Type.capitalize, V_Type.length12], ['name is required', 'name should be capital', 'length should ']),
-            startDateError: MyValidator(formModel.startDate, [V_Type.required], ['Start Date is required']),
-            endDateError: MyValidator(formModel.endDate, [V_Type.required], ['End Date is required']),
+            firstnameError: MyValidator(formModel.firstname, [V_Type.required, V_Type.capitalize, "length5"], ['name is required', 'name should be capital', "length should be less then 5"], "custom", customHandler),
+            startDateError: MyValidator(formModel.startDate, V_Type.required, 'Start Date is required'),
+            endDateError: MyValidator(formModel.endDate, V_Type.required, 'End Date is required'),
+            startEndDateError: MyValidator([formModel.startDate, formModel.endDate], V_Type.startEndDate, 'Start date should be less then End date'),
         }
         setMyvalidationModel(myvalidation_Obj)
         return MyValidator(myvalidation_Obj, V_Type.NullCheck,)
@@ -34,22 +55,23 @@ const ValidatorPage = () => {
     }
 
     const handleChange = (e) => {
-        setformModel({ [e.target.name]: e.target.value })
+        setformModel({ ...formModel, [e.target.name]: e.target.value })
     }
     return (
         <>
             <div className='row'>
                 <div className="col">
-                    <input type="text" name="firstname" value={formModel.firstname} onChange={(e) => handleChange(e)} className='form-control' />
+                    <input type="text" name="firstname" value={formModel.firstname} onChange={handleChange} className='form-control' />
                     {MyvalidationModel.firstnameError}
                 </div>
                 <div className="col">
-                    <input type="date" name="startDate" value={formModel.startDate} onChange={(e) => handleChange(e)} className='form-control' />
+                    <input type="date" name="startDate" value={formModel.startDate} onChange={handleChange} className='form-control' />
                     {MyvalidationModel.startDateError}
                 </div>
                 <div className="col">
-                    <input type="date" name="endDate" value={formModel.endDate} onChange={(e) => handleChange(e)} className='form-control' />
+                    <input type="date" name="endDate" value={formModel.endDate} onChange={handleChange} className='form-control' />
                     {MyvalidationModel.endDateError}
+                    {MyvalidationModel.startEndDateError}
                 </div>
             </div>
             <div className='mt-3'>
