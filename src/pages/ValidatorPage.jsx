@@ -15,7 +15,7 @@ const ValidatorPage = () => {
         startEndDateError: null
     })
     const customHandler = (data) => {
-        if (data.length > 5) {
+        if (data[0].length > 5) {
             return true
         } else { return false }
     }

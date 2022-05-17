@@ -1,61 +1,48 @@
-import ValidationTypes from "./ValidationTypes";
-import isNull from "./isNull";
+export const ValidationTypes = {
+    required: "required",
+    capitalize: "capitalize",
+    length12: "length12",
+    NullCheck: "NullCheck",
+    startEndDate: "startEndDate"
+}
 const MyValidator = (data, type, Error) => {
     if (type === ValidationTypes.NullCheck) {
-        console.log(data);
         if (Object.values(data).some((val) => !isNull(val))) {
             return true
         } else {
             return false
         }
     }
-
-
-    if (data instanceof Array) {
-        console.log(data);
-        const type_arr_ = pushInArray(type)
-        const error_arr_ = pushInArray(Error)
-        let error = ""
-
-        for (let i = 0; i < type_arr_.length; i++) {
-            if (type_arr_.includes(ValidationTypes.startEndDate)) {
+    const type_arr = pushInArray(type)
+    const error_arr = pushInArray(Error)
+    const data_arr = pushInArray(data)
+    let error = ""
+    for (let i = 0; i < type_arr.length; i++) {
+        if (typeof type_arr[i] === "function") {
+            error = type_arr[i](data_arr) ? (<div className='invalid-feedback'>{error_arr[i]}</div>) : "";
+        }
+        else {
+            if (type_arr.includes(ValidationTypes.required) && data_arr[0] === "") {
+                error = (<div className='invalid-feedback'>{error_arr[type_arr.indexOf(ValidationTypes.required)]}</div>);
+                break;
+            }
+            if (type_arr.includes(ValidationTypes.capitalize) && data_arr[0] !== data_arr[0].toUpperCase()) {
+                error = (<div className='invalid-feedback'>{error_arr[type_arr.indexOf(ValidationTypes.capitalize)]}</div>);
+                break;
+            }
+            if (type_arr.includes(ValidationTypes.startEndDate)) {
                 if (data[0] === "" || data[1] === "") break
                 if (Date.parse(data[0]) > Date.parse(data[1])) {
-                    error = (<div className='invalid-feedback'>{error_arr_[type_arr_.indexOf(ValidationTypes.startEndDate)]}</div>);
+                    error = (<div className='invalid-feedback'>{error_arr[type_arr.indexOf(ValidationTypes.startEndDate)]}</div>);
                     break;
                 }
             }
         }
-        return error
     }
-    else {
-        const type_arr = pushInArray(type)
-        const error_arr = pushInArray(Error)
-        let error = ""
-        for (let i = 0; i < type_arr.length; i++) {
-
-            if (typeof type_arr[i] === "function") {
-
-                error = type_arr[i](data) ? (<div className='invalid-feedback'>length should be less then 5</div>) : "";
-
-            }
-            else {
-                if (type_arr.includes(ValidationTypes.required) && data === "") {
-                    error = (<div className='invalid-feedback'>{error_arr[type_arr.indexOf(ValidationTypes.required)]}</div>);
-                    break;
-                }
-                if (type_arr.includes(ValidationTypes.capitalize) && data !== data.toUpperCase()) {
-                    error = (<div className='invalid-feedback'>{error_arr[type_arr.indexOf(ValidationTypes.capitalize)]}</div>);
-                    break;
-                }
-            }
-        }
-        return error
-    }
-
+    return error
 }
 
-export const pushInArray = (data) => {
+const pushInArray = (data) => {
     let new_arr = []
     if (data instanceof Array) {
         new_arr = [...data]
@@ -64,6 +51,25 @@ export const pushInArray = (data) => {
     }
     return new_arr
 }
+const isNull = (value) => {
+    if (
+        value === '' ||
+        value === 0 ||
+        value === 'Null' ||
+        value === null ||
+        value === undefined ||
+        value === 'Please Select' ||
+        value.length === 0 ||
+        value === -1 ||
+        value === 'Please Coverage' ||
+        value === 'Please Relationship'
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
+
 
 
 
