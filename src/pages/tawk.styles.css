@@ -1,0 +1,57 @@
+.twk {
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  width: 60px;
+}
+.message-container {
+  box-shadow: 0 0 18px 8px rgba(0, 0, 0, 0.1), 0 0 32px 32px rgba(0, 0, 0, 0.08);
+  width: 300px;
+  right: 0px;
+  bottom: 75px;
+
+  position: absolute;
+  transition: all 0.2s ease;
+  font-family: Helvetica, Arial, sans-serif;
+  border-radius: 6px;
+  border: 2px solid green;
+  padding: 4px;
+}
+.tawk_btn {
+  border-radius: 50%;
+  cursor: pointer;
+  background: green;
+  display: inline-block;
+}
+.tawk_btn img {
+  width: 100%;
+  padding: 10px;
+}
+.header {
+  background: green;
+  padding: 5px;
+}
+.header h1 {
+  color: white;
+  margin: 0;
+  font-size: 18px;
+}
+.tawk_body {
+  background-color: white;
+  padding: 10px;
+}
+.tawk_field {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 2px solid green;
+}
+.tawk_submit_btn {
+  width: 100%;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 5px;
+}

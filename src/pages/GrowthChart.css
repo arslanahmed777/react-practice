@@ -1,0 +1,26 @@
+.collapse_content {
+  transition: height 0.35s ease;
+  overflow: hidden;
+}
+.mainTab {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 1px solid #036bb4;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.subTab {
+  color: #3c4d56;
+  font-weight: bold;
+  font-size: 12px;
+  border-bottom: 1px solid #ddd;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.activeSubTab {
+  color: #0392cf;
+  border-bottom: 1px solid #0392cf;
+}
