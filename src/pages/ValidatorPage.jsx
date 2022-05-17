@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import MyValidator from '../components/ValidatoorComponent/MyValidator'
-import V_Type from '../components/ValidatoorComponent/ValidationTypes'
+import MyValidator, { ValidationTypes as V_Type } from '../components/ValidatoorComponent/MyValidator'
 
 const ValidatorPage = () => {
     const [formModel, setformModel] = useState({
