@@ -138,8 +138,6 @@ class App extends Component {
             <ValidatorPage />
           </Route>
         </Switch>
-
-
       </div >
 
 

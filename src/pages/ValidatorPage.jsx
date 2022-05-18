@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import MyValidator, { ValidationTypes as V_Type } from '../components/ValidatoorComponent/MyValidator'
+import Validator, { ValidationTypes as V_Type } from '../components/ValidatoorComponent/Validator'
 
 const ValidatorPage = () => {
     const [formModel, setformModel] = useState({
@@ -21,13 +21,13 @@ const ValidatorPage = () => {
     const setValidation = () => {
         let myvalidation_Obj = {
             ...MyvalidationModel,
-            firstnameError: MyValidator(formModel.firstname, [V_Type.required, V_Type.capitalize, customHandler], ['name is required', 'name should be capital', "length should be"],),
-            startDateError: MyValidator(formModel.startDate, V_Type.required, 'Start Date is required'),
-            endDateError: MyValidator(formModel.endDate, V_Type.required, 'End Date is required'),
-            startEndDateError: MyValidator([formModel.startDate, formModel.endDate], V_Type.startEndDate, 'Start date should be less then End date'),
+            firstnameError: Validator(formModel.firstname, [V_Type.required, V_Type.capitalize, customHandler], ['name is required', 'name should be capital', "length should be"],),
+            startDateError: Validator(formModel.startDate, V_Type.required, 'Start Date is required'),
+            endDateError: Validator(formModel.endDate, V_Type.required, 'End Date is required'),
+            startEndDateError: Validator([formModel.startDate, formModel.endDate], V_Type.startEndDate, 'Start date should be less then End date'),
         }
         setMyvalidationModel(myvalidation_Obj)
-        return MyValidator(myvalidation_Obj, V_Type.NullCheck,)
+        return Validator(myvalidation_Obj, V_Type.NullCheck,)
     }
     const handleSave = () => {
         let my_validation = setValidation()
@@ -44,23 +44,25 @@ const ValidatorPage = () => {
     }
     return (
         <>
-            <div className='row'>
-                <div className="col">
-                    <input type="text" name="firstname" value={formModel.firstname} onChange={handleChange} className='form-control' />
-                    {MyvalidationModel.firstnameError}
+            <div className='container-fluid'>
+                <div className='row'>
+                    <div className="col">
+                        <input type="text" name="firstname" value={formModel.firstname} onChange={handleChange} className='form-control' />
+                        {MyvalidationModel.firstnameError}
+                    </div>
+                    <div className="col">
+                        <input type="date" name="startDate" value={formModel.startDate} onChange={handleChange} className='form-control' />
+                        {MyvalidationModel.startDateError}
+                    </div>
+                    <div className="col">
+                        <input type="date" name="endDate" value={formModel.endDate} onChange={handleChange} className='form-control' />
+                        {MyvalidationModel.endDateError}
+                        {MyvalidationModel.startEndDateError}
+                    </div>
                 </div>
-                <div className="col">
-                    <input type="date" name="startDate" value={formModel.startDate} onChange={handleChange} className='form-control' />
-                    {MyvalidationModel.startDateError}
+                <div className='mt-3'>
+                    <button onClick={handleSave} className='btn btn-success'>Submit</button>
                 </div>
-                <div className="col">
-                    <input type="date" name="endDate" value={formModel.endDate} onChange={handleChange} className='form-control' />
-                    {MyvalidationModel.endDateError}
-                    {MyvalidationModel.startEndDateError}
-                </div>
-            </div>
-            <div className='mt-3'>
-                <button onClick={handleSave} className='btn btn-success'>Submit</button>
             </div>
         </>
 
