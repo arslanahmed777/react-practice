@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Validator, { ValidationTypes as V_Type } from '../components/ValidatoorComponent/Validator'
+import Axios from "axios"
 
 const ValidatorPage = () => {
     const [formModel, setformModel] = useState({
         firstname: "",
         startDate: "",
         endDate: ""
+
     })
     const [MyvalidationModel, setMyvalidationModel] = useState({
         firstnameError: null,
@@ -29,14 +31,16 @@ const ValidatorPage = () => {
         setMyvalidationModel(myvalidation_Obj)
         return Validator(myvalidation_Obj, V_Type.NullCheck,)
     }
-    const handleSave = () => {
+    const handleSave = async () => {
         let my_validation = setValidation()
         if (my_validation) {
             console.log("My validation", my_validation);
         } else {
             console.log("My validation", my_validation);
-
         }
+
+
+
     }
 
     const handleChange = (e) => {
@@ -59,6 +63,7 @@ const ValidatorPage = () => {
                         {MyvalidationModel.endDateError}
                         {MyvalidationModel.startEndDateError}
                     </div>
+
                 </div>
                 <div className='mt-3'>
                     <button onClick={handleSave} className='btn btn-success'>Submit</button>

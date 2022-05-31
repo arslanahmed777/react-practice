@@ -19,13 +19,14 @@ import RenderingPage from "./pages/RenderingPage";
 import AccordionPage from "./pages/AccordionPage";
 import AccordionpkgPage from "./pages/AccordionpkgPage";
 import ValidatorPage from "./pages/ValidatorPage";
+import SuperPopupPage from "./pages/SuperPopupPage";
 
 class App extends Component {
   render() {
     return (
       <div >
         <ul className="mynavbar" >
-          <li>
+          {/* <li>
             <Link to="/" >Home</Link>
           </li>
           <li>
@@ -79,6 +80,9 @@ class App extends Component {
           </li>
           <li>
             <Link to="/validator" >Validator</Link>
+          </li> */}
+          <li>
+            <Link to="/super-popup" >Super Popup</Link>
           </li>
         </ul>
         <Switch>
@@ -136,6 +140,9 @@ class App extends Component {
           </Route>
           <Route path="/validator">
             <ValidatorPage />
+          </Route>
+          <Route path="/super-popup">
+            <SuperPopupPage />
           </Route>
         </Switch>
       </div >
