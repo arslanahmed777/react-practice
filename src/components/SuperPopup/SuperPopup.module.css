@@ -14,8 +14,80 @@
 }
 .body{
     position: absolute;
-    background-color: rgb(122, 95, 95);
-    left: 50%;
-    top:50%;
-    transform: translate(-50%, 0);
+    background-color: rgb(122, 95, 95); 
+    
+}
+ 
+.animate {
+    animation-fill-mode: forwards;
+    animation-duration: .8s;
+    animation-name: slideDown;
+    animation-timing-function: ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes slideDown {
+    0% {
+        top: 0;
+        left:0;
+        opacity: 0;
+    }
+    10%{
+        top: 0;
+            left: 50%;
+            opacity: 0;
+    }
+
+    100% {
+        top: 50%;
+        left:50%;
+        opacity: 1;
+    }
+}
+.xs {
+    min-width: 30vw;
+    min-height: 30vh;
+
+}
+
+.sm {
+    min-width: 40vw;
+    min-height: 40vh;
+
+}
+
+.md {
+    min-width: 50vw;
+    min-height: 50vh;
+
+}
+
+.lg {
+    min-width: 60vw;
+    min-height: 60vh;
+
+}
+
+.xl {
+    min-width: 70vw;
+    min-height: 70vh;
+
+}
+
+.xxl {
+    min-width: 90vw;
+    min-height: 90vh;
+
+}
+
+.xxxl {
+    min-width: 90vw;
+    min-height: 90vh;
+
+}
+
+.xxxxl {
+    min-width: 100vw;
+    min-height: 100vh;
+
 }
