@@ -1,0 +1,16 @@
+.tableWrapper {
+    z-index: 2;
+    background: #faf8f8;
+    border: 1px solid #036bb4;
+    box-shadow: 0 7px 10px rgb(0 0 0 / 40%);
+    height: 100%;
+    min-height: 100px;
+
+}
+.row{
+    display: flex;
+        flex-wrap: wrap;
+}
+.col {
+    width: 100%;
+}

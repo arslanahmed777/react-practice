@@ -21,6 +21,7 @@ const ValidatorPage = () => {
         } else { return false }
     }
     const setValidation = () => {
+        console.log("setValidation");
         let myvalidation_Obj = {
             ...MyvalidationModel,
             firstnameError: Validator(formModel.firstname, [V_Type.required, V_Type.capitalize, customHandler], ['name is required', 'name should be capital', "length should be"],),
@@ -38,13 +39,11 @@ const ValidatorPage = () => {
         } else {
             console.log("My validation", my_validation);
         }
-
-
-
     }
 
     const handleChange = (e) => {
         setformModel({ ...formModel, [e.target.name]: e.target.value })
+        setValidation()
     }
     return (
         <>
