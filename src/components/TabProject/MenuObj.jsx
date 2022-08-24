@@ -1,4 +1,4 @@
-import React from "react";
+
 // import Patient from "./tabcomponents/Patient";
 // import Scheduler from "./tabcomponents/Scheduler";
 // import Dashboard from "./tabcomponents/Dashboard";

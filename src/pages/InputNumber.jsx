@@ -19,7 +19,7 @@ export default class InputNumber extends Component {
   };
   handleChange = (e) => {
     console.log("change run", e);
-    const ss = String.fromCharCode(e);
+    // const ss = String.fromCharCode(e);
     this.setState({
       inputval: e.target.value,
     });
@@ -33,7 +33,7 @@ export default class InputNumber extends Component {
     }
   };
   validate = (e) => {
-    const re = /^[0-9\b]+$/;
+    // const re = /^[0-9\b]+$/;
     console.log("ketpress run", e);
 
     if (this.handleNumericCheck(e)) {

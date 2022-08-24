@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-import axios from "axios";
 
 import MyDatasets from "./MyDatasets";
 
@@ -27,120 +26,6 @@ const patiendata = {
   ],
 };
 
-const options = {
-  scales: {
-    x: {
-      beginAtZero: true,
-      display: true,
-      title: {
-        display: true,
-        text: "Age(months)",
-        color: "red",
-      },
-
-      ticks: {
-        callback: function (value, index, values) {
-          const updatedvalue = Math.floor(value);
-
-          return value % 3 == 0 ? value : "";
-        },
-      },
-    },
-    x1: {
-      position: "top",
-      title: {
-        display: true,
-        text: "Age(months)",
-        color: "red",
-      },
-      ticks: {
-        callback: function (value, index, values) {
-          const updatedvalue = Math.floor(value);
-
-          return value % 3 == 0 ? value : "";
-        },
-      },
-    },
-    y: {
-      display: true,
-      position: "left",
-      title: {
-        display: true,
-        text: "weight(Kg)",
-        color: "green",
-      },
-    },
-    y1: {
-      type: "linear",
-      stepSize: 1,
-      min: 0,
-      max: 18,
-      position: "right",
-      title: {
-        display: true,
-        text: "weight(lbs)",
-        color: "blue",
-      },
-      grid: {
-        drawOnChartArea: false,
-      },
-      ticks: {
-        callback: function (value, index, values) {
-          // return index % 2 === 0 ? this.getLabelForValue(value) : "";
-          return (value * 2.20462).toPrecision(2);
-        },
-      },
-    },
-  },
-  plugins: {
-    title: {
-      display: true,
-      text: "this is line graph",
-      fontSize: 18,
-    },
-    legend: {
-      display: true,
-      reverse: true,
-      position: "right",
-      labels: {
-        color: "rgb(255, 99, 132)",
-        boxWidth: 15,
-        usePointStyle: true,
-        pointStyle: "circle"
-      },
-    },
-
-    tooltip: {
-      callbacks: {
-        beforeTitle: function () {
-          console.log("beforeTitle");
-        },
-        // label: function (tooltipItem, patiendata) {
-        //   this.pointToolTip = [];
-        //   // console.log(data.datasets);
-
-        //   // this.pointToolTip.push("Age at Visit: " + 12);
-        //   // this.pointToolTip.push("Weight: " + 122);
-        //   // return this.pointToolTip;
-        //   if (tooltipItem.datasetIndex == 9) {
-        //     var focused_point_data = "asf";
-        //     console.log(tooltipItem);
-        //     // console.log(tooltipItem.dataset);
-        //     this.pointToolTip.push("Age at Visit: " + focused_point_data);
-        //     return this.pointToolTip;
-        //   } else {
-        //     return "af";
-        //   }
-        // },
-      },
-    },
-  },
-  animation: {
-    onComplete: function (e) {
-      this.data.datasets.forEach((element, i) => { });
-    },
-  },
-};
 
 export default class Chart extends Component {
   constructor(props) {
@@ -162,8 +47,8 @@ export default class Chart extends Component {
             },
             ticks: {
               callback: function (value, index, values) {
-                const updatedvalue = Math.floor(value);
-                return value % 3 == 0 ? value : "";
+                // const updatedvalue = Math.floor(value);
+                return value % 3 === 0 ? value : "";
               },
             },
           },

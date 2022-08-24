@@ -22,6 +22,8 @@ import ValidatorPage from "./pages/ValidatorPage";
 import SuperPopupPage from "./pages/SuperPopupPage";
 import SuperSearchPage from "./pages/SuperSearchPage";
 
+import ReactGridPage from "./pages/ReactGridPage";
+
 class App extends Component {
   render() {
     return (
@@ -82,12 +84,15 @@ class App extends Component {
           <li>
             <Link to="/validator" >Validator</Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/super-popup" >Super Popup</Link>
           </li>
           <li>
             <Link to="/supersearch" >Super Search</Link>
-          </li> */}
+          </li>
+          <li>
+            <Link to="/react-grid" >Reat Grid</Link>
+          </li>
         </ul>
         <Switch>
           <Route path="/" exact>
@@ -150,6 +155,9 @@ class App extends Component {
           </Route>
           <Route path="/supersearch">
             <SuperSearchPage />
+          </Route>
+          <Route path="/react-grid">
+            <ReactGridPage />
           </Route>
         </Switch>
       </div >

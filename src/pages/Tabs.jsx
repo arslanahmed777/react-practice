@@ -51,7 +51,7 @@ export default class Tabs extends Component {
           <nav>
             <Nav tabs style={{ flexDirection: "column" }}>
               {menuItems
-                .filter((obj) => obj.right == true)
+                .filter((obj) => obj.right === true)
                 .map((menuitem) => {
                   return (
                     <NavItem key={menuitem.key} style={activeTab === menuitem.key ? { background: "#b8fdf8" } : {}} >

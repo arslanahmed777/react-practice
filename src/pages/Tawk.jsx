@@ -53,7 +53,7 @@ export class FF extends Component {
               this.setState({ open: !open });
             }}
           >
-            <img src={!open ? chat : cross} />
+            <img src={!open ? chat : cross} alt="tawkimg" />
           </div>
         </div>
       </>

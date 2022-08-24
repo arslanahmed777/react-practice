@@ -14,14 +14,12 @@ export const Html1 = () => {
 }
 
 const mystyle = {
-    padding: "6px",
     background: "#ba80cd",
     borderRadius: "7px",
     padding: "10px",
     color: "#fff",
 }
 const myActiveStyle = {
-    padding: "6px",
     background: "#a539c9",
     borderRadius: "7px",
     padding: "10px",

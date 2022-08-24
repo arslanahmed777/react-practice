@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Validator, { ValidationTypes as V_Type } from '../components/ValidatoorComponent/Validator'
-import Axios from "axios"
 
 const ValidatorPage = () => {
     const [formModel, setformModel] = useState({

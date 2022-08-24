@@ -1,0 +1,20 @@
+.gridWrapper{
+    display:grid;
+    background-color: red;
+    height: 400px;
+    max-height: 330px; 
+    overflow-y: auto;
+}
+.gridrow-header{
+    background-color: pink;
+        height: 30px;
+        border: 1px solid blue;
+        position: sticky;
+        top: 0;
+}
+.gridrow{
+    background-color: green;
+    height: 30px;
+    border:1px solid blue
+ 
+}

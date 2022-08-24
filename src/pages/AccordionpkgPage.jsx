@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import Accordion from "react-accordian"
 const mystyle = {
-    padding: "6px",
     background: "#ba80cd",
     borderRadius: "7px",
     padding: "10px",
     color: "#fff",
 }
 const myActiveStyle = {
-    padding: "6px",
     background: "#a539c9",
     borderRadius: "7px",
     padding: "10px",

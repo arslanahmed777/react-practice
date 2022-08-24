@@ -1,5 +1,4 @@
-import React, { Component, createRef } from "react";
-import Chart from "../components/MyChart/Chart";
+import React, { Component } from "react";
 
 import BirthTo24MonthsWeightForAge from "../components/All_Charts/Birth-to-24-months-weight-for-age/BirthTo24MonthsWeightForAge";
 import BirthTo24MonthsWeightForLength from "../components/All_Charts/Birth-to-24-months-weight-for-length/BirthTo24MonthsWeightForLength";
