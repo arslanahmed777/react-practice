@@ -13,12 +13,12 @@ const ReactGridComponent = (props) => {
 
     useEffect(() => {
         const gridfunc = gridref.current.addEventListener("scroll", (event) => {
-            var scrollTop = gridref.current.scrollTop;
+            var scrollTop = Math.ceil(gridref.current.scrollTop);
             var scrollheight = gridref.current.scrollHeight;
             var docHeight = gridref.current.clientHeight;
             // var trackLength = docHeight - winHeight;
             var ggg = scrollheight - docHeight - scrollTop
-            var pctScrolled = `${Math.floor(((scrollheight + scrollTop) / scrollheight) * 100)}%`;
+            var pctScrolled = `${Math.floor((scrollTop / (scrollheight - docHeight)) * 100)}%`;
             console.log('ggg  ', ggg);
             console.log('scrollheight  ', scrollheight);
             console.log('docHeight  ', docHeight);
