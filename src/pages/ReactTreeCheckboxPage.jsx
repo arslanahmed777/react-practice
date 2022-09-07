@@ -24,18 +24,19 @@ const ReactTreeCheckboxPage = () => {
                     expanded={expanded}
                     handleExpand={handleExpand}
                     changeState={handleCheck}
-                //saveTree={handeleSave}
-                //column={12}
-                // savebtnClass={'btn'}
-                //expandIcon={<i className="fas fa-folder-open" style={{ color: '#e6c300' }}></i> }
-                // compressIcon={ <i className="fas fa-folder" style={{ color: '#e6c300' }}></i>}
-                //fontSize={'18px'}
-                //  backgroundColor={'lightblue'}
-                // color={'red'}
-                // horizontalSpacing={'14px'}
-                // verticalSpacing={'5px'}
-                // borderLeft={'1px dotted red'}
-                //allowCheck={false}
+                    //saveTree={handeleSave}
+                    //column={12}
+                    // savebtnClass={'btn'}
+                    //expandIcon={<i className="fas fa-folder-open" style={{ color: '#e6c300' }}></i> }
+                    // compressIcon={ <i className="fas fa-folder" style={{ color: '#e6c300' }}></i>}
+                    //fontSize={'18px'}
+                    //  backgroundColor={'lightblue'}
+                    // color={'red'}
+                    // horizontalSpacing={'14px'}
+                    // verticalSpacing={'5px'}
+                    // borderLeft={'1px dotted red'}
+                    //allowCheck={false}
+                    allowDelete={true}
                 />
             </div>
         </div>
