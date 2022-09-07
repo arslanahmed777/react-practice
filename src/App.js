@@ -23,6 +23,7 @@ import SuperPopupPage from "./pages/SuperPopupPage";
 import SuperSearchPage from "./pages/SuperSearchPage";
 
 import ReactGridPage from "./pages/ReactGridPage";
+import ReactTreeCheckboxPage from "./pages/ReactTreeCheckboxPage";
 
 class App extends Component {
   render() {
@@ -93,6 +94,9 @@ class App extends Component {
           <li>
             <Link to="/react-grid" >Reat Grid</Link>
           </li>
+          <li>
+            <Link to="/react-tree-checkbox" >Reat Tree Checkbox</Link>
+          </li>
         </ul>
         <Switch>
           <Route path="/" exact>
@@ -158,6 +162,9 @@ class App extends Component {
           </Route>
           <Route path="/react-grid">
             <ReactGridPage />
+          </Route>
+          <Route path="/react-tree-checkbox">
+            <ReactTreeCheckboxPage />
           </Route>
         </Switch>
       </div >
