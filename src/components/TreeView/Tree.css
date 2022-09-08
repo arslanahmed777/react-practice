@@ -110,6 +110,19 @@
   border: 2px solid #000;
   color: #fff;
 }
+.rtc-text-wrapper{
+  position:relative
+}
+.rtc-deleteicon{
+display:none;
+cursor: pointer;
+position: absolute;
+top: 0;
+  right: -11px;
+}
+.rtc-text-wrapper:hover  .rtc-deleteicon{
+display: flex
+}
 
 .rtc-scroll::-webkit-scrollbar {
   height: 8px;

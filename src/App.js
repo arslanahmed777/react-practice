@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div >
         <ul className="mynavbar" >
-          <li>
+          {/* <li>
             <Link to="/" >Home</Link>
           </li>
           <li>
@@ -93,7 +93,7 @@ class App extends Component {
           </li>
           <li>
             <Link to="/react-grid" >Reat Grid</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/react-tree-checkbox" >Reat Tree Checkbox</Link>
           </li>

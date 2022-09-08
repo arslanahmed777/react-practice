@@ -29,13 +29,14 @@ const ReactTreeCheckboxPage = () => {
                     // savebtnClass={'btn'}
                     //expandIcon={<i className="fas fa-folder-open" style={{ color: '#e6c300' }}></i> }
                     // compressIcon={ <i className="fas fa-folder" style={{ color: '#e6c300' }}></i>}
+                    //deleteIcon={<i className="fas fa-trash" style={{ color: 'red', fontSize: 12 }}></i>}
                     //fontSize={'18px'}
                     //  backgroundColor={'lightblue'}
                     // color={'red'}
                     // horizontalSpacing={'14px'}
                     // verticalSpacing={'5px'}
                     // borderLeft={'1px dotted red'}
-                    //allowCheck={false}
+                    // allowCheck={false}
                     allowDelete={true}
                 />
             </div>
