@@ -146,7 +146,7 @@ const addNewNode = (nodeid, nodeobj, allnodes) => {
         node.id === nodeid
             ? allnodes[index].nodes.push(nodeobj)
             : node.nodes
-                ? getupdatednodes(nodeid, node.nodes)
+                ? addNewNode(nodeid, nodeobj, node.nodes)
                 : ''
     );
     return allnodes
@@ -195,7 +195,7 @@ const Tree = (props) => {
 };
 
 const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compressIcon, expanded, handleExpand, changeState, fontSize, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
-    const hasChild = nodes.nodes ? true : false;
+    const hasChild = nodes.nodes.length > 0 ? true : false;
     const handleVisibility = (e) => {
         let newArray = expanded
         if (expanded.includes(e)) {
@@ -222,7 +222,7 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
             text: person,
             value: person.toLowerCase(),
             status: false,
-            nodes: null,
+            nodes: [],
             id: uniqueId(),
         }
         console.log(newobj);
