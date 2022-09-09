@@ -38,6 +38,7 @@ const ReactTreeCheckboxPage = () => {
                     // borderLeft={'1px dotted red'}
                     // allowCheck={false}
                     allowDelete={true}
+                    allowAdd={true}
                 />
             </div>
         </div>
