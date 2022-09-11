@@ -42,7 +42,7 @@ const ReactTreeCheckboxPage = () => {
                     // verticalSpacing={'5px'}
                     // borderLeft={'1px dotted red'}
                     // allowCheck={false}
-                    addText={"Add new right"}
+                    // addText={"Add new right"}
                     allowDelete={true}
                     allowAdd={true}
                 />
