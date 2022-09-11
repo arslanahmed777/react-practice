@@ -169,7 +169,7 @@ const TreeView = ({ filternodes = [], column, expandIcon, deleteIcon, compressIc
         if (nodeValue === null) return
         let newobj = {
             text: nodeValue,
-            value: nodeValue.toLowerCase(),
+            value: nodeValue.replace(/\s/g, '').toLowerCase(),
             status: false,
             nodes: [],
             id: uniqueId(),
@@ -243,11 +243,9 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
     const handleAddNode = (nodeid, allnodes) => {
         let nodeValue = prompt("Enter the value");
         if (nodeValue === null) return
-
-        console.log(nodeid, nodeValue);
         let newobj = {
             text: nodeValue,
-            value: nodeValue.toLowerCase(),
+            value: nodeValue.replace(/\s/g, '').toLowerCase(),
             status: false,
             nodes: [],
             id: uniqueId(),
