@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TreeView from "../components/TreeView/TreeView"
 import nodes from '../components/TreeView/nodes';
+import { FaTrash, FaRegPlusSquare } from "react-icons/fa"
 const ReactTreeCheckboxPage = () => {
     const [Nodes, setNodes] = useState(nodes);
     const [expanded, setExpanded] = useState([]);
@@ -25,18 +26,23 @@ const ReactTreeCheckboxPage = () => {
                     handleExpand={handleExpand}
                     changeState={handleCheck}
                     //saveTree={handeleSave}
-                    //column={12}
+                    column={12}
                     // savebtnClass={'btn'}
                     //expandIcon={<i className="fas fa-folder-open" style={{ color: '#e6c300' }}></i> }
                     // compressIcon={ <i className="fas fa-folder" style={{ color: '#e6c300' }}></i>}
-                    //deleteIcon={<i className="fas fa-trash" style={{ color: 'red', fontSize: 12 }}></i>}
-                    //fontSize={'18px'}
-                    //  backgroundColor={'lightblue'}
-                    // color={'red'}
+                    // deleteIcon={<FaTrash size={18} style={{ color: 'red' }} />}
+                    // addIcon={<FaRegPlusSquare size={18} style={{ color: 'blue' }} />}
+                    // customStyling={{
+                    //     fontSize: "18px",
+                    //      fontWeight:"600",
+                    //     color: "red",
+                    //     backgroundColor: "lightblue"
+                    // }}
                     // horizontalSpacing={'14px'}
                     // verticalSpacing={'5px'}
                     // borderLeft={'1px dotted red'}
                     // allowCheck={false}
+                    addText={"Add new right"}
                     allowDelete={true}
                     allowAdd={true}
                 />
