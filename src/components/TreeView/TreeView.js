@@ -162,23 +162,30 @@ const uniqueId = (length = 16) => {
 
 
 
-const TreeView = ({ filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }) => {
+const TreeView = ({ onAllowAdd, customRef, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }) => {
     //column = 12 / column
     const handleAddParentNode = (allnodes) => {
-        let nodeValue = prompt("Enter the value");
-        if (nodeValue === null) return
-        let newobj = {
-            text: nodeValue,
-            value: nodeValue.replace(/\s/g, '').toLowerCase(),
-            status: false,
-            nodes: [],
-            id: uniqueId(),
-        }
-        const all_nodes = allnodes
-        all_nodes.push(newobj)
-        changeState(all_nodes)
+        onAllowAdd()
+        // let nodeValue = prompt("Enter the value");
+        // if (nodeValue === null) return
+        // let newobj = {
+        //     text: nodeValue,
+        //     value: nodeValue.replace(/\s/g, '').toLowerCase(),
+        //     status: false,
+        //     nodes: [],
+        //     id: uniqueId(),
+        // }
+        // const all_nodes = allnodes
+        // all_nodes.push(newobj)
+        // changeState(all_nodes)
     }
 
+    function addPNode(obj) {
+        console.log(obj);
+    }
+    function customRef(obj) {
+
+    }
     return (
         <div className="rtc-row" style={customStyling}>
             {allowAdd ? (
@@ -318,6 +325,7 @@ TreeView.propTypes = {
     expanded: PropTypes.array.isRequired,
     handleExpand: PropTypes.func.isRequired,
     changeState: PropTypes.func,
+    onAllowAdd: PropTypes.func,
     saveTree: PropTypes.oneOfType([
         PropTypes.func,
         PropTypes.bool,
