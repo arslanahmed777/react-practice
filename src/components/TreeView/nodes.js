@@ -1,3 +1,4 @@
+
 const uniqueId = (length = 16) => {
     return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
 }
@@ -10,21 +11,21 @@ const nodes = [
         nodes: [
             {
                 text: 'View',
-                value: 'setup_view',
+                value: 'view',
                 status: false,
                 nodes: [],
                 id: uniqueId(),
             },
             {
                 text: 'Add/Edit',
-                value: 'setup_add_edit',
+                value: 'edit',
                 status: false,
                 nodes: [],
                 id: uniqueId(),
             },
             {
                 text: 'Delete',
-                value: 'setup_delete',
+                value: 'delete',
                 status: false,
                 nodes: [],
                 id: uniqueId(),
@@ -37,21 +38,21 @@ const nodes = [
                 nodes: [
                     {
                         text: 'View',
-                        value: 'practice_view',
+                        value: 'view',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
                     },
                     {
                         text: 'Add/Edit',
-                        value: 'practice_add_edit',
+                        value: 'edit',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
                     },
                     {
                         text: 'Delete',
-                        value: 'practice_delete',
+                        value: 'delete',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
@@ -66,21 +67,21 @@ const nodes = [
                 nodes: [
                     {
                         text: 'View',
-                        value: 'location_view',
+                        value: 'view',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
                     },
                     {
                         text: 'Add/Edit',
-                        value: 'location_add_edit',
+                        value: 'edit',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
                     },
                     {
                         text: 'Delete',
-                        value: 'location_delete',
+                        value: 'delete',
                         status: false,
                         nodes: [],
                         id: uniqueId(),
@@ -98,24 +99,24 @@ const nodes = [
         nodes: [
             {
                 text: 'View',
-                value: 'fax_view',
+                value: 'view',
                 status: false,
-                id: uniqueId(),
                 nodes: [],
+                id: uniqueId(),
             },
             {
                 text: 'Add/Edit',
-                value: 'fax_add_edit',
+                value: 'edit',
                 status: false,
-                id: uniqueId(),
                 nodes: [],
+                id: uniqueId(),
             },
             {
-                text: 'delete',
-                value: 'fax_delete',
+                text: 'Delete',
+                value: 'delete',
                 status: false,
-                id: uniqueId(),
                 nodes: [],
+                id: uniqueId(),
             },
         ],
     }
