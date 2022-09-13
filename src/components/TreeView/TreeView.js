@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import PropTypes from 'prop-types';
 import folderClose from "./folderClose.svg"
 import folderOpen from "./folderOpen.svg"
@@ -162,10 +162,16 @@ const uniqueId = (length = 16) => {
 
 
 
-const TreeView = ({ onAllowAdd, customRef, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }) => {
-    //column = 12 / column
+const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }, ref) => {
+    useImperativeHandle(ref, () => ({
+
+        getAlert(obj) {
+            console.log("getAlert from Child", obj);
+        }
+
+    }));
     const handleAddParentNode = (allnodes) => {
-        onAllowAdd()
+
         // let nodeValue = prompt("Enter the value");
         // if (nodeValue === null) return
         // let newobj = {
@@ -187,10 +193,11 @@ const TreeView = ({ onAllowAdd, customRef, filternodes = [], column, expandIcon,
 
     }
     return (
+
         <div className="rtc-row" style={customStyling}>
             {allowAdd ? (
                 <div className={`rtc-scroll rtc-col-${column}`}>
-                    <span title={addText} style={{ cursor: "pointer" }} onClick={() => handleAddParentNode(filternodes)} >
+                    <span title={addText} style={{ cursor: "pointer" }} onClick={handleAddNode} >
                         {addIcon}<span style={{ marginLeft: 10 }}>{addText}</span>
                     </span>
                 </div>
@@ -212,7 +219,8 @@ const TreeView = ({ onAllowAdd, customRef, filternodes = [], column, expandIcon,
 
         </div>
     );
-};
+})
+
 
 const Tree = (props) => {
     return (
@@ -289,6 +297,8 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
     );
 };
 
+TreeView.displayName = "TreeView"
+
 // Specifies the default values for props:
 TreeView.defaultProps = {
     borderLeft: 'none',
@@ -326,6 +336,7 @@ TreeView.propTypes = {
     handleExpand: PropTypes.func.isRequired,
     changeState: PropTypes.func,
     onAllowAdd: PropTypes.func,
+    handleAddNode: PropTypes.func,
     saveTree: PropTypes.oneOfType([
         PropTypes.func,
         PropTypes.bool,

@@ -3,7 +3,7 @@ import TreeView from "../components/TreeView/TreeView"
 import nodes from '../components/TreeView/nodes';
 import { FaTrash, FaRegPlusSquare } from "react-icons/fa"
 const ReactTreeCheckboxPage = () => {
-    let myref = useRef(null)
+    const treeRef = useRef(null);
     const [Nodes, setNodes] = useState(nodes);
     const [expanded, setExpanded] = useState([]);
     const [addNode, setaddNode] = useState(false);
@@ -52,9 +52,8 @@ const ReactTreeCheckboxPage = () => {
             }))
         }
     }
-    const onSaveNode = (e, func) => {
-        console.log(func)
-        func(formobj)
+    const onSaveNode = () => {
+        treeRef.current.getAlert(formobj)
         // console.log(myref.current.addPNode);
         // myref.current.addPNode(formobj)
 
@@ -63,7 +62,7 @@ const ReactTreeCheckboxPage = () => {
         <div>ReactTreeCheckboxPage
             <div style={{ border: '1px solid red', padding: 12 }}>
                 <TreeView
-                    customRef={onSaveNode}
+                    ref={treeRef}
                     filternodes={Nodes}
                     expanded={expanded}
                     handleExpand={handleExpand}
@@ -86,7 +85,7 @@ const ReactTreeCheckboxPage = () => {
                     // borderLeft={'1px dotted red'}
                     // allowCheck={false}
                     // addText={"Add new right"}
-                    onAllowAdd={allowAdd}
+                    handleAddNode={allowAdd}
                     allowDelete={true}
                     allowAdd={true}
                 />
@@ -115,7 +114,7 @@ const ReactTreeCheckboxPage = () => {
                         <div className='col-lg-2'>
                             <div className="mb-3">
                                 <label className="form-label">Enter default status</label>
-                                <input value={formobj.status} name="status" checked={formobj.status} onChange={handleChange} class="form-check-input" type="checkbox" />
+                                <input value={formobj.status} name="status" checked={formobj.status} onChange={handleChange} className="form-check-input" type="checkbox" />
                             </div>
                         </div>
                     </div>
