@@ -7,12 +7,13 @@ const ReactTreeCheckboxPage = () => {
     const [Nodes, setNodes] = useState(nodes);
     const [expanded, setExpanded] = useState([]);
     const [addNode, setaddNode] = useState(false);
+    const [nodeid, setnodeid] = useState(null)
     const [formobj, setformobj] = useState({
         text: '',
         value: '',
         status: false,
         nodes: [],
-        id: null,
+        id: "",
     })
     const handleExpand = (newArray) => {
         console.log('handleExpand', newArray);
@@ -26,7 +27,9 @@ const ReactTreeCheckboxPage = () => {
     const handeleSave = (chklist) => {
         console.log('handeleSave', chklist);
     };
-    const allowAdd = (obj) => {
+    const allowAdd = (nodeid) => {
+        console.log(nodeid);
+        setnodeid(nodeid)
         setaddNode(true)
     }
     const closeAllowAdd = () => {
@@ -53,10 +56,15 @@ const ReactTreeCheckboxPage = () => {
         }
     }
     const onSaveNode = () => {
-        treeRef.current.getAlert(formobj)
-        // console.log(myref.current.addPNode);
-        // myref.current.addPNode(formobj)
-
+        treeRef.current.addNewNode(nodeid, formobj)
+        setaddNode(false)
+        setformobj({
+            text: '',
+            value: '',
+            status: false,
+            nodes: [],
+            id: "",
+        })
     }
     return (
         <div>ReactTreeCheckboxPage
@@ -82,7 +90,7 @@ const ReactTreeCheckboxPage = () => {
                     // }}
                     // horizontalSpacing={'14px'}
                     // verticalSpacing={'5px'}
-                    // borderLeft={'1px dotted red'}
+                    borderLeft={'1px dotted red'}
                     // allowCheck={false}
                     // addText={"Add new right"}
                     handleAddNode={allowAdd}
@@ -113,8 +121,8 @@ const ReactTreeCheckboxPage = () => {
                         </div>
                         <div className='col-lg-2'>
                             <div className="mb-3">
-                                <label className="form-label">Enter default status</label>
                                 <input value={formobj.status} name="status" checked={formobj.status} onChange={handleChange} className="form-check-input" type="checkbox" />
+                                <label className="form-label">Enter default status</label>
                             </div>
                         </div>
                     </div>

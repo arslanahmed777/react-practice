@@ -141,12 +141,12 @@ const getupdatednodes = (nodeid, allnodes) => {
     return allnodes
 }
 
-const addNewNode = (nodeid, nodeobj, allnodes) => {
+const add_New_Node = (nodeid, nodeobj, allnodes) => {
     allnodes.forEach((node, index) =>
         node.id === nodeid
             ? allnodes[index].nodes.push(nodeobj)
             : node.nodes
-                ? addNewNode(nodeid, nodeobj, node.nodes)
+                ? add_New_Node(nodeid, nodeobj, node.nodes)
                 : ''
     );
     return allnodes
@@ -156,6 +156,25 @@ const uniqueId = (length = 16) => {
     return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
 }
 
+const isUniqueId = (id, allnodes) => {
+    let found = true;
+    let foundCheck = (id, allNodes) => {
+        for (let i = 0; i < allNodes.length; i++) {
+            if (allNodes[i].id === id) {
+                found = false;
+            } else {
+                if (allNodes[i].nodes.length > 0) {
+                    foundCheck(id, allNodes[i].nodes);
+                }
+            }
+        }
+    };
+    foundCheck(id, allnodes);
+    return found;
+};
+
+// ******************************** CUSTOM HELPER FUNCTIONS END *********************
+
 
 
 
@@ -163,13 +182,30 @@ const uniqueId = (length = 16) => {
 
 
 const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }, ref) => {
-    useImperativeHandle(ref, () => ({
-
-        getAlert(obj) {
-            console.log("getAlert from Child", obj);
+    useImperativeHandle(ref, () => {
+        return {
+            addNewNode,
+        };
+    });
+    const addNewNode = (nodeid, obj) => {
+        console.log(nodeid, obj);
+        const allnodes = filternodes
+        const isIdUnique = isUniqueId(obj.id, allnodes)
+        if (isIdUnique) {
+            if (nodeid === 0) {
+                allnodes.push(obj)
+                changeState(allnodes)
+            } else {
+                changeState(add_New_Node(nodeid, obj, allnodes))
+            }
+        }
+        else {
+            alert("Every node id must be uniqe.This id already exist in the tree")
         }
 
-    }));
+
+
+    }
     const handleAddParentNode = (allnodes) => {
 
         // let nodeValue = prompt("Enter the value");
@@ -186,18 +222,13 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
         // changeState(all_nodes)
     }
 
-    function addPNode(obj) {
-        console.log(obj);
-    }
-    function customRef(obj) {
 
-    }
     return (
 
         <div className="rtc-row" style={customStyling}>
             {allowAdd ? (
                 <div className={`rtc-scroll rtc-col-${column}`}>
-                    <span title={addText} style={{ cursor: "pointer" }} onClick={handleAddNode} >
+                    <span title={addText} style={{ cursor: "pointer" }} onClick={() => handleAddNode(0)} >
                         {addIcon}<span style={{ marginLeft: 10 }}>{addText}</span>
                     </span>
                 </div>
@@ -206,7 +237,7 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
             {filternodes.map((items, i) => {
                 return (
                     <div key={i} className={`rtc-scroll rtc-col-${column}`} style={{ overflowX: "auto" }}>
-                        <TreeNode filternodes={filternodes} nodes={items} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                        <TreeNode handleAddNode={handleAddNode} filternodes={filternodes} nodes={items} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                     </div>
                 )
             })}
@@ -226,14 +257,14 @@ const Tree = (props) => {
     return (
         <>
             {props.data.map((items, i) => (
-                <TreeNode filternodes={props.filternodes} key={i} nodes={items} expandIcon={props.expandIcon} deleteIcon={props.deleteIcon} addIcon={props.addIcon} compressIcon={props.compressIcon} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} />
+                <TreeNode handleAddNode={props.handleAddNode} filternodes={props.filternodes} key={i} nodes={items} expandIcon={props.expandIcon} deleteIcon={props.deleteIcon} addIcon={props.addIcon} compressIcon={props.compressIcon} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} />
             ))}
 
         </>
     );
 };
 
-const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compressIcon, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
+const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, addIcon, compressIcon, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
     const hasChild = nodes.nodes.length > 0 ? true : false;
     const handleVisibility = (e) => {
         let newArray = expanded
@@ -255,19 +286,18 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
 
     }
 
-    const handleAddNode = (nodeid, allnodes) => {
-        let nodeValue = prompt("Enter the value");
-        if (nodeValue === null) return
-        let newobj = {
-            text: nodeValue,
-            value: nodeValue.replace(/\s/g, '').toLowerCase(),
-            status: false,
-            nodes: [],
-            id: uniqueId(),
-        }
-        changeState(addNewNode(nodeid, newobj, allnodes))
-
-    }
+    // const handleAddNode = (nodeid, allnodes) => {
+    //     let nodeValue = prompt("Enter the value");
+    //     if (nodeValue === null) return
+    //     let newobj = {
+    //         text: nodeValue,
+    //         value: nodeValue.replace(/\s/g, '').toLowerCase(),
+    //         status: false,
+    //         nodes: [],
+    //         id: uniqueId(),
+    //     }
+    //     changeState(add_New_Node(nodeid, newobj, allnodes))
+    // }
     return (
         <>
             <div className="rtc-d-flex" style={{ alignItems: "center", marginBottom: verticalSpacing }} >
@@ -283,14 +313,14 @@ const TreeNode = ({ filternodes, nodes, expandIcon, deleteIcon, addIcon, compres
                         </span>
                         <span className="rtc-text-wrapper">{nodes.text}
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
-                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id, filternodes)} className="rtc-addicon">{addIcon}</span> : null}
+                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{addIcon}</span> : null}
                         </span>
                     </span>
                 </div>
             </div>
             {expanded.includes(nodes.id) && (
                 <div style={{ marginLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 12px )`, borderLeft: borderLeft, paddingLeft: borderLeft === "none" ? "0px" : "12px" }}>
-                    <Tree filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                    <Tree handleAddNode={handleAddNode} filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                 </div>
             )}
         </>
