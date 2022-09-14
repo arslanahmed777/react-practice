@@ -86,14 +86,14 @@ const ReactTreeCheckboxPage = () => {
                     //     // color: "red",
                     //     // backgroundColor: "lightblue"
                     // }}
-                    horizontalSpacing={'25px'}
+                    // horizontalSpacing={'23px'}
                     verticalSpacing={'0px'}
-                    // borderLeft={'1px dotted red'}
+                    //borderLeft={'1px dotted red'}
                     // allowCheck={false}
                     // addText={"Add new right"}
                     handleAddNode={allowAdd}
-                    allowDelete={true}
-                    allowAdd={true}
+                // allowDelete={true}
+                // allowAdd={true}
                 />
             </div>
             <div>

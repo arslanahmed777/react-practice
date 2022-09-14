@@ -305,7 +305,8 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
                             </span>)
                         }
                         <span className="rtc-text-wrapper">
-                            {nodes.text}
+                            <span style={{ cursor: "pointer" }} onClick={(e) => handleVisibility(nodes.id)} >     {nodes.text}</span>
+
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
                             {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{addIcon}</span> : null}
                         </span>
