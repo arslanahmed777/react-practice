@@ -1,9 +1,9 @@
 
 import React, { forwardRef, useImperativeHandle } from "react";
 import PropTypes from 'prop-types';
-import folderClose from "./folderClose.svg"
-import folderOpen from "./folderOpen.svg"
 import deleteicon from "./deleteIcon.svg"
+import chevronRight from "./chevronRight.svg"
+import chevronDown from "./chevronDown.svg"
 import addicon from "./addicon.svg"
 import "./Tree.css";
 
@@ -181,47 +181,57 @@ const isUniqueId = (id, allnodes) => {
 
 
 
-const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, saveTree, savebtnClass, addText }, ref) => {
+const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, addText }, ref) => {
     useImperativeHandle(ref, () => {
         return {
             addNewNode,
         };
     });
+
+
     const addNewNode = (nodeid, obj) => {
-        console.log(nodeid, obj);
         const allnodes = filternodes
-        const isIdUnique = isUniqueId(obj.id, allnodes)
+        let id = uniqueId(8)
+        let status = false
+        let nodes = []
+        let value = ""
+        if (!obj.hasOwnProperty('text') || obj.text === "") {
+            return alert('key "text" is missing in the object or passed empty string')
+        }
+        if (!obj.hasOwnProperty('value') || obj.value === "") {
+            value = obj.text.replace(/\s/g, '').toLowerCase()
+        } else {
+            value = obj.value
+        }
+        if (obj.hasOwnProperty('id') && obj.id !== "") {
+            id = obj.id
+        }
+        if (obj.hasOwnProperty('nodes')) {
+            nodes = obj.nodes
+        }
+
+        const newObj = {
+            ...obj,
+            text: obj.text,
+            value: value,
+            status: status,
+            nodes: nodes,
+            id: id,
+        }
+        const isIdUnique = isUniqueId(id, allnodes)
         if (isIdUnique) {
             if (nodeid === 0) {
-                allnodes.push(obj)
+                allnodes.push(newObj)
                 changeState(allnodes)
             } else {
-                changeState(add_New_Node(nodeid, obj, allnodes))
+                changeState(add_New_Node(nodeid, newObj, allnodes))
             }
         }
         else {
             alert("Every node id must be uniqe.This id already exist in the tree")
         }
 
-
-
     }
-    const handleAddParentNode = (allnodes) => {
-
-        // let nodeValue = prompt("Enter the value");
-        // if (nodeValue === null) return
-        // let newobj = {
-        //     text: nodeValue,
-        //     value: nodeValue.replace(/\s/g, '').toLowerCase(),
-        //     status: false,
-        //     nodes: [],
-        //     id: uniqueId(),
-        // }
-        // const all_nodes = allnodes
-        // all_nodes.push(newobj)
-        // changeState(all_nodes)
-    }
-
 
     return (
 
@@ -229,7 +239,7 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
             {allowAdd ? (
                 <div className={`rtc-scroll rtc-col-${column}`}>
                     <span title={addText} style={{ cursor: "pointer" }} onClick={() => handleAddNode(0)} >
-                        {addIcon}<span style={{ marginLeft: 10 }}>{addText}</span>
+                        {addIcon}<span style={{ marginLeft: 7 }}>{addText}</span>
                     </span>
                 </div>
             ) : null}
@@ -241,13 +251,6 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
                     </div>
                 )
             })}
-
-            {typeof saveTree === "function" && (
-                <div className="rtc-col-12">
-                    <button onClick={() => { saveTree(filternodes) }} className={savebtnClass}>Save</button>
-                </div>
-            )}
-
         </div>
     );
 })
@@ -286,18 +289,6 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
 
     }
 
-    // const handleAddNode = (nodeid, allnodes) => {
-    //     let nodeValue = prompt("Enter the value");
-    //     if (nodeValue === null) return
-    //     let newobj = {
-    //         text: nodeValue,
-    //         value: nodeValue.replace(/\s/g, '').toLowerCase(),
-    //         status: false,
-    //         nodes: [],
-    //         id: uniqueId(),
-    //     }
-    //     changeState(add_New_Node(nodeid, newobj, allnodes))
-    // }
     return (
         <>
             <div className="rtc-d-flex" style={{ alignItems: "center", marginBottom: verticalSpacing }} >
@@ -308,10 +299,13 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
                 )}
                 <div>
                     <span style={{ display: "flex", alignItems: "end" }}>
-                        <span className="rtc-mx-1">
-                            {allowCheck && <input value={nodes.id} name={nodes.id} onChange={(e) => handleCheck(e)} type="checkbox" checked={nodes.status} className="rtc-mx-1" style={{ width: `16px`, height: `16px`, verticalAlign: "middle" }} />}
-                        </span>
-                        <span className="rtc-text-wrapper">{nodes.text}
+                        {allowCheck &&
+                            (<span style={{ marginRight: "7px" }}>
+                                <input value={nodes.id} name={nodes.id} onChange={(e) => handleCheck(e)} type="checkbox" checked={nodes.status} style={{ width: `16px`, height: `16px`, verticalAlign: "middle" }} />
+                            </span>)
+                        }
+                        <span className="rtc-text-wrapper">
+                            {nodes.text}
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
                             {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{addIcon}</span> : null}
                         </span>
@@ -319,7 +313,7 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
                 </div>
             </div>
             {expanded.includes(nodes.id) && (
-                <div style={{ marginLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 12px )`, borderLeft: borderLeft, paddingLeft: borderLeft === "none" ? "0px" : "12px" }}>
+                <div style={{ borderLeft, paddingLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 1px )` }}>
                     <Tree handleAddNode={handleAddNode} filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                 </div>
             )}
@@ -333,18 +327,16 @@ TreeView.displayName = "TreeView"
 TreeView.defaultProps = {
     borderLeft: 'none',
     customStyling: {},
-    compressIcon: <img src={folderClose} alt="compressicon" />,
-    expandIcon: <img src={folderOpen} alt="expandicon" />,
+    compressIcon: <img src={chevronRight} alt="compressicon" />,
+    expandIcon: <img src={chevronDown} alt="expandicon" />,
     deleteIcon: <img src={deleteicon} alt="deleteicon" />,
     addIcon: <img src={addicon} alt="deleteicon" />,
     column: 6,
     allowCheck: true,
     allowDelete: false,
     allowAdd: false,
-    horizontalSpacing: "14px",
-    verticalSpacing: "5px",
-    saveTree: false,
-    savebtnClass: "rtc-save-button",
+    horizontalSpacing: "23px",
+    verticalSpacing: "0px",
     addText: "Add New Node"
 };
 
@@ -367,10 +359,6 @@ TreeView.propTypes = {
     changeState: PropTypes.func,
     onAllowAdd: PropTypes.func,
     handleAddNode: PropTypes.func,
-    saveTree: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.bool,
-    ]),
     savebtnClass: PropTypes.string,
     addText: PropTypes.string,
 };

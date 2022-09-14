@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import TreeView from "../components/TreeView/TreeView"
 import nodes from '../components/TreeView/nodes';
-import { FaTrash, FaRegPlusSquare } from "react-icons/fa"
+import { FaTrash, FaRegPlusSquare, FaChevronRight, FaChevronDown, FaFolder, FaFolderOpen } from "react-icons/fa"
 const ReactTreeCheckboxPage = () => {
     const treeRef = useRef(null);
     const [Nodes, setNodes] = useState(nodes);
@@ -24,8 +24,8 @@ const ReactTreeCheckboxPage = () => {
         setNodes([...treeNodes]);
     };
 
-    const handeleSave = (chklist) => {
-        console.log('handeleSave', chklist);
+    const handeleSave = () => {
+        console.log('handeleSave', Nodes);
     };
     const allowAdd = (nodeid) => {
         console.log(nodeid);
@@ -75,28 +75,29 @@ const ReactTreeCheckboxPage = () => {
                     expanded={expanded}
                     handleExpand={handleExpand}
                     changeState={handleCheck}
-                    //saveTree={handeleSave}
                     column={12}
-                    // savebtnClass={'btn'}
-                    //expandIcon={<i className="fas fa-folder-open" style={{ color: '#e6c300' }}></i> }
-                    // compressIcon={ <i className="fas fa-folder" style={{ color: '#e6c300' }}></i>}
+                    // expandIcon={<FaFolderOpen style={{ color: '#7c7c7c' }} />}
+                    // compressIcon={<FaFolder style={{ color: '#7c7c7c' }} />}
                     // deleteIcon={<FaTrash size={18} style={{ color: 'red' }} />}
                     // addIcon={<FaRegPlusSquare size={18} style={{ color: 'blue' }} />}
                     // customStyling={{
-                    //     fontSize: "18px",
-                    //      fontWeight:"600",
-                    //     color: "red",
-                    //     backgroundColor: "lightblue"
+                    //     fontSize: "12px",
+                    //     // fontWeight: "500",
+                    //     // color: "red",
+                    //     // backgroundColor: "lightblue"
                     // }}
-                    // horizontalSpacing={'14px'}
-                    // verticalSpacing={'5px'}
-                    borderLeft={'1px dotted red'}
+                    horizontalSpacing={'25px'}
+                    verticalSpacing={'0px'}
+                    // borderLeft={'1px dotted red'}
                     // allowCheck={false}
                     // addText={"Add new right"}
                     handleAddNode={allowAdd}
                     allowDelete={true}
                     allowAdd={true}
                 />
+            </div>
+            <div>
+                <button onClick={handeleSave} className='btn btn-success'>Save Node</button>
             </div>
             {addNode ? (
                 <div style={{ border: '1px solid red', padding: 12 }}>
