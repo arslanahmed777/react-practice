@@ -6,6 +6,7 @@ const uniqueId = (length = 16) => {
             .replace('.', '')
     );
 };
+
 const nodes = [
     {
         value: 'Animals',
@@ -186,7 +187,7 @@ const nodes = [
                                 text: 'morethreepair',
                                 status: false,
                                 id: uniqueId(8),
-                                node: [
+                                nodes: [
                                     {
                                         value: 'spider',
                                         text: 'spider',
@@ -308,6 +309,160 @@ const nodes = [
             {
                 value: 'nonseedmakers',
                 text: 'Non Seed Makers',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+        ],
+    },
+    {
+        value: 'cars',
+        text: 'cars',
+        status: false,
+        id: uniqueId(8),
+        nodes: [
+            {
+                value: 'toyota',
+                text: 'toyota',
+                status: false,
+                id: uniqueId(8),
+                nodes: [
+                    {
+                        value: 'Avalon',
+                        text: 'Avalon',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                    {
+                        value: 'Camry',
+                        text: 'Camry',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                    {
+                        value: 'Corolla',
+                        text: 'Corolla',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                ],
+            },
+            {
+                value: 'honda',
+                text: 'honda',
+                status: false,
+                id: uniqueId(8),
+                nodes: [
+                    {
+                        value: 'Passport',
+                        text: 'Passport',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                    {
+                        value: 'City',
+                        text: 'City',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                ],
+            },
+            {
+                value: 'Kia',
+                text: 'Kia',
+                status: false,
+                id: uniqueId(8),
+                nodes: [
+                    {
+                        value: 'Sportage',
+                        text: 'Sportage',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                    {
+                        value: 'Soul',
+                        text: 'Soul',
+                        status: false,
+                        id: uniqueId(8),
+                        nodes: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: 'Generarions',
+        text: 'Generarions',
+        status: false,
+        id: uniqueId(8),
+        nodes: [
+            {
+                value: 'uniqueId(8)st generation',
+                text: 'uniqueId(8)st generation',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: '2nd generation',
+                text: '2nd generation',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: '3rd generation',
+                text: '3rd generation',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: '4th generation',
+                text: '4th generation',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: '5th generation',
+                text: '5th generation',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+        ],
+    },
+
+    {
+        value: 'trignometery',
+        text: 'trignometery',
+        status: false,
+        id: uniqueId(8),
+        nodes: [
+            {
+                value: 'Sinθ',
+                text: 'Sinθ',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: 'Cosθ',
+                text: 'Cosθ',
+                status: false,
+                id: uniqueId(8),
+                nodes: [],
+            },
+            {
+                value: 'Tanθ',
+                text: 'Sinθ',
                 status: false,
                 id: uniqueId(8),
                 nodes: [],

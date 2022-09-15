@@ -157,12 +157,14 @@ const uniqueId = (length = 16) => {
 }
 
 const isUniqueId = (id, allnodes) => {
+
     let found = true;
     let foundCheck = (id, allNodes) => {
         for (let i = 0; i < allNodes.length; i++) {
             if (allNodes[i].id === id) {
                 found = false;
             } else {
+                console.log(allNodes[i]);
                 if (allNodes[i].nodes.length > 0) {
                     foundCheck(id, allNodes[i].nodes);
                 }
@@ -173,6 +175,24 @@ const isUniqueId = (id, allnodes) => {
     return found;
 };
 
+const getPath = (obj, id, key, delimiter) => {
+    let stack = obj.map((item) => ({ path: `${delimiter}${item[key]}`, currObj: item }));
+    while (stack.length) {
+        const { path, currObj } = stack.pop();
+        if (currObj.id === id) {
+            return { path: path, node: currObj };
+        } else if (currObj.nodes?.length) {
+            stack = stack.concat(
+                currObj.nodes.map((item) => ({
+                    path: path.concat(`${delimiter}${item[key]}`),
+                    currObj: item,
+                }))
+            );
+        }
+    }
+    return null; // if id does not exists
+}
+
 // ******************************** CUSTOM HELPER FUNCTIONS END *********************
 
 
@@ -181,7 +201,7 @@ const isUniqueId = (id, allnodes) => {
 
 
 
-const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIcon, deleteIcon, compressIcon, addIcon, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, addText }, ref) => {
+const TreeView = forwardRef(({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filternodes = [], column, expanded, handleExpand, changeState, customStyling, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd, addText }, ref) => {
     useImperativeHandle(ref, () => {
         return {
             addNewNode,
@@ -218,6 +238,7 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
             nodes: nodes,
             id: id,
         }
+        console.log(newObj);
         const isIdUnique = isUniqueId(id, allnodes)
         if (isIdUnique) {
             if (nodeid === 0) {
@@ -239,7 +260,7 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
             {allowAdd ? (
                 <div className={`rtc-scroll rtc-col-${column}`}>
                     <span title={addText} style={{ cursor: "pointer" }} onClick={() => handleAddNode(0)} >
-                        {addIcon}<span style={{ marginLeft: 7 }}>{addText}</span>
+                        {icons.addIcon}<span style={{ marginLeft: 7 }}>{addText}</span>
                     </span>
                 </div>
             ) : null}
@@ -247,7 +268,7 @@ const TreeView = forwardRef(({ handleAddNode, filternodes = [], column, expandIc
             {filternodes.map((items, i) => {
                 return (
                     <div key={i} className={`rtc-scroll rtc-col-${column}`} style={{ overflowX: "auto" }}>
-                        <TreeNode handleAddNode={handleAddNode} filternodes={filternodes} nodes={items} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                        <TreeNode icons={icons} handleAddNode={handleAddNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} nodes={items} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                     </div>
                 )
             })}
@@ -260,23 +281,36 @@ const Tree = (props) => {
     return (
         <>
             {props.data.map((items, i) => (
-                <TreeNode handleAddNode={props.handleAddNode} filternodes={props.filternodes} key={i} nodes={items} expandIcon={props.expandIcon} deleteIcon={props.deleteIcon} addIcon={props.addIcon} compressIcon={props.compressIcon} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} />
+                <TreeNode icons={props.icons} handleAddNode={props.handleAddNode} onNodeClickOptions={props.onNodeClickOptions} onNodeClick={props.onNodeClick} filternodes={props.filternodes} key={i} nodes={items} expanded={props.expanded} handleExpand={props.handleExpand} changeState={props.changeState} horizontalSpacing={props.horizontalSpacing} verticalSpacing={props.verticalSpacing} borderLeft={props.borderLeft} allowCheck={props.allowCheck} allowDelete={props.allowDelete} allowAdd={props.allowAdd} />
             ))}
 
         </>
     );
 };
 
-const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, addIcon, compressIcon, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
+const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filternodes, nodes, expanded, handleExpand, changeState, horizontalSpacing, verticalSpacing, borderLeft, allowCheck, allowDelete, allowAdd }) => {
     const hasChild = nodes.nodes.length > 0 ? true : false;
     const handleVisibility = (e) => {
+        const hasnodes = e.nodes.length > 0 ? true : false;
+        if (!hasnodes) return
         let newArray = expanded
-        if (expanded.includes(e)) {
-            newArray = expanded.filter((value) => { return value !== e })
+        if (expanded.includes(e.id)) {
+            newArray = expanded.filter((value) => { return value !== e.id })
         } else {
-            newArray.push(e)
+            newArray.push(e.id)
         }
         handleExpand(newArray)
+    }
+
+    const handleSingleNode = (nodes) => {
+        const nodeObj = getPath(filternodes, nodes.id, onNodeClickOptions.key, onNodeClickOptions.delimiter)
+        if (onNodeClick) {
+            onNodeClick(nodeObj)
+            if (onNodeClickOptions.allowExpand) {
+                handleVisibility(nodes)
+            }
+        }
+
     }
 
     const handleCheck = (e) => {
@@ -293,8 +327,8 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
         <>
             <div className="rtc-d-flex" style={{ alignItems: "center", marginBottom: verticalSpacing }} >
                 {hasChild && (
-                    <button name={nodes.id} onClick={(e) => handleVisibility(nodes.id)} style={{ height: "fit-content" }} className="rtc-btn">
-                        {expanded.includes(nodes.id) ? expandIcon : compressIcon}
+                    <button name={nodes.id} onClick={(e) => handleVisibility(nodes)} style={{ height: "fit-content" }} className="rtc-btn">
+                        {expanded.includes(nodes.id) ? icons.expandIcon : icons.compressIcon}
                     </button>
                 )}
                 <div>
@@ -305,17 +339,23 @@ const TreeNode = ({ handleAddNode, filternodes, nodes, expandIcon, deleteIcon, a
                             </span>)
                         }
                         <span className="rtc-text-wrapper">
-                            <span style={{ cursor: "pointer" }} onClick={(e) => handleVisibility(nodes.id)} >     {nodes.text}</span>
+                            {hasChild && (
+                                <span>
+                                    {expanded.includes(nodes.id) ? icons.nodeExpandIcon : icons.nodeCompressIcon}
+                                </span>
+                            )}
 
-                            {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{deleteIcon}</span> : null}
-                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{addIcon}</span> : null}
+                            <span style={{ cursor: onNodeClick ? "pointer" : "auto" }} onClick={(e) => handleSingleNode(nodes)} >     {nodes.text}</span>
+
+                            {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
+                            {allowAdd ? <span title="Add" onClick={() => handleAddNode(nodes.id)} className="rtc-addicon">{icons.addIcon}</span> : null}
                         </span>
                     </span>
                 </div>
             </div>
             {expanded.includes(nodes.id) && (
                 <div style={{ borderLeft, paddingLeft: borderLeft === "none" ? horizontalSpacing : `calc(${horizontalSpacing} - 1px )` }}>
-                    <Tree handleAddNode={handleAddNode} filternodes={filternodes} data={nodes.nodes} expandIcon={expandIcon} deleteIcon={deleteIcon} addIcon={addIcon} compressIcon={compressIcon} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
+                    <Tree icons={icons} handleAddNode={handleAddNode} onNodeClickOptions={onNodeClickOptions} onNodeClick={onNodeClick} filternodes={filternodes} data={nodes.nodes} expanded={expanded} handleExpand={handleExpand} changeState={changeState} horizontalSpacing={horizontalSpacing} verticalSpacing={verticalSpacing} borderLeft={borderLeft} allowCheck={allowCheck} allowDelete={allowDelete} allowAdd={allowAdd} />
                 </div>
             )}
         </>
@@ -328,17 +368,26 @@ TreeView.displayName = "TreeView"
 TreeView.defaultProps = {
     borderLeft: 'none',
     customStyling: {},
-    compressIcon: <img src={chevronRight} alt="compressicon" />,
-    expandIcon: <img src={chevronDown} alt="expandicon" />,
-    deleteIcon: <img src={deleteicon} alt="deleteicon" />,
-    addIcon: <img src={addicon} alt="deleteicon" />,
+    icons: {
+        compressIcon: <img src={chevronRight} alt="compressicon" />,
+        expandIcon: <img src={chevronDown} alt="expandicon" />,
+        nodeCompressIcon: "",
+        nodeExpandIcon: "",
+        deleteIcon: <img src={deleteicon} alt="deleteicon" />,
+        addIcon: <img src={addicon} alt="deleteicon" />,
+    },
     column: 6,
     allowCheck: true,
     allowDelete: false,
     allowAdd: false,
     horizontalSpacing: "23px",
     verticalSpacing: "0px",
-    addText: "Add New Node"
+    addText: "Add New Node",
+    onNodeClickOptions: {
+        allowExpand: false,
+        key: "text",
+        delimiter: "/"
+    }
 };
 
 TreeView.propTypes = {
@@ -349,10 +398,6 @@ TreeView.propTypes = {
     verticalSpacing: PropTypes.string,
     horizontalSpacing: PropTypes.string,
     customStyling: PropTypes.object,
-    compressIcon: PropTypes.element,
-    expandIcon: PropTypes.element,
-    deleteIcon: PropTypes.element,
-    addIcon: PropTypes.element,
     column: PropTypes.number,
     filternodes: PropTypes.array.isRequired,
     expanded: PropTypes.array.isRequired,
@@ -360,8 +405,11 @@ TreeView.propTypes = {
     changeState: PropTypes.func,
     onAllowAdd: PropTypes.func,
     handleAddNode: PropTypes.func,
+    onNodeClick: PropTypes.func,
+    onNodeClickOptions: PropTypes.object,
     savebtnClass: PropTypes.string,
     addText: PropTypes.string,
+    icons: PropTypes.object
 };
 
 
