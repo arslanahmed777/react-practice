@@ -102,14 +102,14 @@ const ReactTreeCheckboxPage = () => {
                     handleAddNode={allowAdd}
                     allowDelete={true}
                     allowAdd={true}
-                // icons={{
-                //     compressIcon: <FaChevronRight style={{ color: '#7c7c7c' }} />,
-                //     expandIcon: < FaChevronDown style={{ color: '#7c7c7c' }} />,
-                //     nodeCompressIcon: <FaFolder style={{ color: '#8a59ff' }} />,
-                //     nodeExpandIcon: < FaFolderOpen style={{ color: '#8a59ff' }} />,
-                //     deleteIcon: <FaTrash size={18} style={{ color: 'red' }} />,
-                //     addIcon: <FaRegPlusSquare size={18} style={{ color: 'blue' }} />,
-                // }}
+                    icons={{
+                        compressIcon: <FaChevronRight style={{ color: '#7c7c7c' }} />,
+                        expandIcon: < FaChevronDown style={{ color: '#7c7c7c' }} />,
+                        nodeCompressIcon: <FaFolder style={{ color: '#8a59ff' }} />,
+                        nodeExpandIcon: < FaFolderOpen style={{ color: '#8a59ff' }} />,
+                        deleteIcon: <FaTrash size={18} style={{ color: '#ff4b4b' }} />,
+                        addIcon: <FaRegPlusSquare size={18} style={{ color: 'blue' }} />,
+                    }}
                 />
             </div>
             <div>

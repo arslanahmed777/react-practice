@@ -344,7 +344,6 @@ const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filte
                                     {expanded.includes(nodes.id) ? icons.nodeExpandIcon : icons.nodeCompressIcon}
                                 </span>
                             )}
-
                             <span style={{ cursor: onNodeClick ? "pointer" : "auto" }} onClick={(e) => handleSingleNode(nodes)} >     {nodes.text}</span>
 
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
