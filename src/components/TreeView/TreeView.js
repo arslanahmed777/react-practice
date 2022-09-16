@@ -339,11 +339,14 @@ const TreeNode = ({ icons, handleAddNode, onNodeClickOptions, onNodeClick, filte
                             </span>)
                         }
                         <span className="rtc-text-wrapper">
-                            {hasChild && (
+                            {hasChild ? (
                                 <span>
                                     {expanded.includes(nodes.id) ? icons.nodeExpandIcon : icons.nodeCompressIcon}
                                 </span>
-                            )}
+                            ) :
+                                icons.nonNodeIcon ? <span>{icons.nonNodeIcon}</span> : ""
+
+                            }
                             <span style={{ cursor: onNodeClick ? "pointer" : "auto" }} onClick={(e) => handleSingleNode(nodes)} >     {nodes.text}</span>
 
                             {allowDelete ? <span title="Delete" onClick={() => handleDeleteNode(nodes.id, filternodes)} className="rtc-deleteicon">{icons.deleteIcon}</span> : null}
@@ -370,12 +373,13 @@ TreeView.defaultProps = {
     icons: {
         compressIcon: <img src={chevronRight} alt="compressicon" />,
         expandIcon: <img src={chevronDown} alt="expandicon" />,
-        nodeCompressIcon: "",
-        nodeExpandIcon: "",
+        nodeCompressIcon: null,
+        nodeExpandIcon: null,
+        nonNodeIcon: null,
         deleteIcon: <img src={deleteicon} alt="deleteicon" />,
         addIcon: <img src={addicon} alt="deleteicon" />,
     },
-    column: 6,
+    column: 12,
     allowCheck: true,
     allowDelete: false,
     allowAdd: false,

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import TreeView from "../components/TreeView/TreeView"
 import nodes from '../components/TreeView/nodes';
 import { FaTrash, FaRegPlusSquare, FaChevronRight, FaChevronDown, FaFolder, FaFolderOpen, } from "react-icons/fa"
+import { BsFileEarmarkCode } from "react-icons/bs";
 const ReactTreeCheckboxPage = () => {
     const treeRef = useRef(null);
     const [Nodes, setNodes] = useState(nodes);
@@ -82,12 +83,12 @@ const ReactTreeCheckboxPage = () => {
                     handleExpand={handleExpand}
                     changeState={handleCheck}
                     column={12}
-                    //  onNodeClick={handleNodeClick}
-                    // onNodeClickOptions={{
-                    //     allowExpand: false,
-                    //     key: "text",
-                    //     delimiter: "/"
-                    // }}
+                    onNodeClick={handleNodeClick}
+                    onNodeClickOptions={{
+                        allowExpand: false,
+                        key: "id",
+                        delimiter: "/"
+                    }}
                     // customStyling={{
                     //     fontSize: "12px",
                     //     // fontWeight: "500",
@@ -107,8 +108,9 @@ const ReactTreeCheckboxPage = () => {
                         expandIcon: < FaChevronDown style={{ color: '#7c7c7c' }} />,
                         nodeCompressIcon: <FaFolder style={{ color: '#8a59ff' }} />,
                         nodeExpandIcon: < FaFolderOpen style={{ color: '#8a59ff' }} />,
-                        deleteIcon: <FaTrash size={18} style={{ color: '#ff4b4b' }} />,
-                        addIcon: <FaRegPlusSquare size={18} style={{ color: 'blue' }} />,
+                        nonNodeIcon: < BsFileEarmarkCode style={{ color: '#8a59ff' }} />,
+                        deleteIcon: <FaTrash style={{ color: '#ff4b4b' }} />,
+                        addIcon: <FaRegPlusSquare style={{ color: 'blue' }} />,
                     }}
                 />
             </div>
