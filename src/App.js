@@ -24,6 +24,7 @@ import SuperSearchPage from "./pages/SuperSearchPage";
 
 import ReactGridPage from "./pages/ReactGridPage";
 import ReactTreeCheckboxPage from "./pages/ReactTreeCheckboxPage";
+import PaginationPage from "./pages/PaginationPage";
 
 class App extends Component {
   render() {
@@ -94,8 +95,11 @@ class App extends Component {
           <li>
             <Link to="/react-grid" >Reat Grid</Link>
           </li> */}
-          <li>
+          {/* <li>
             <Link to="/react-tree-checkbox" >Reat Tree Checkbox</Link>
+          </li> */}
+          <li>
+            <Link to="/pagination" >Pagination</Link>
           </li>
         </ul>
         <Switch>
@@ -165,6 +169,9 @@ class App extends Component {
           </Route>
           <Route path="/react-tree-checkbox">
             <ReactTreeCheckboxPage />
+          </Route>
+          <Route path="/pagination">
+            <PaginationPage />
           </Route>
         </Switch>
       </div >
