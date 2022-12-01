@@ -7,37 +7,15 @@ const SuperSearchPage = () => {
         <div className='row justify-content-center'>
             <div className='col-md-6'>
                 <SuperSearch
-                    ApiLink={'https://jsonplaceholder.typicode.com/posts'}
-                    method="get"
-                    postBody={{
-                        param_list: [
-                            {
-                                key: 'ICDCODE',
-                                value: superSearchValue,
-                            },
-                        ],
-                    }}
-                    // tableHeight="120px"
-                    // tableWidth="350px"
-                    getSelectedData={() => { }}
-                    onChange={(value) => setsuperSearchValue(value)}
+                    variantType="variant1"
+                    themeColor="#FF4200"
                     searchValue={superSearchValue}
-                    tableData={[
-                        {
-                            columName: 'ID',
-                            bindingValue: 'id',
-                        },
-                        {
-                            columName: 'Title',
-                            bindingValue: 'title',
-                        },
-                        {
-                            columName: 'Body',
-                            bindingValue: 'body',
-                        },
-                    ]}
-                    id="ICDFormInNEWICD"
-
+                    onChange={(value) => setsuperSearchValue(value)}
+                    id="testing"
+                    disabled={false}
+                    placeholder="Search..."
+                    searchIcon={<i className='fa fa-user' />}
+                    iconPosition="left"
 
                 />
             </div>

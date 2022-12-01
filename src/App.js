@@ -25,16 +25,17 @@ import SuperSearchPage from "./pages/SuperSearchPage";
 import ReactGridPage from "./pages/ReactGridPage";
 import ReactTreeCheckboxPage from "./pages/ReactTreeCheckboxPage";
 import PaginationPage from "./pages/PaginationPage";
+import PortalPage from "./pages/PortalPage";
 
 class App extends Component {
   render() {
     return (
       <div >
         <ul className="mynavbar" >
-          {/* <li>
+          <li>
             <Link to="/" >Home</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/growthchart" >Growth chart</Link>
           </li>
           <li>
@@ -88,19 +89,22 @@ class App extends Component {
           </li>
           <li>
             <Link to="/super-popup" >Super Popup</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/supersearch" >Super Search</Link>
           </li>
           <li>
             <Link to="/react-grid" >Reat Grid</Link>
-          </li> */}
+          </li>
           {/* <li>
             <Link to="/react-tree-checkbox" >Reat Tree Checkbox</Link>
           </li> */}
-          <li>
+          {/* <li>
             <Link to="/pagination" >Pagination</Link>
-          </li>
+          </li> */}
+          {/* <li>
+            <Link to="/portal" >Portal</Link>
+          </li> */}
         </ul>
         <Switch>
           <Route path="/" exact>
@@ -172,6 +176,9 @@ class App extends Component {
           </Route>
           <Route path="/pagination">
             <PaginationPage />
+          </Route>
+          <Route path="/portal">
+            <PortalPage />
           </Route>
         </Switch>
       </div >
