@@ -1,0 +1,85 @@
+.mainWrapper {
+    position: relative;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    vertical-align: top;
+    border-color: #dee2e6;
+    color: #626569;
+    height: inherit;
+    border: 0px solid #ccc;
+    border-top: 0px;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tableWrapper {
+    z-index: 2;
+    background: #faf8f8;
+    border: 1px solid #036bb4;
+    box-shadow: 0 7px 10px rgb(0 0 0 / 40%);
+    height: 100%;
+    min-height: 100px;
+
+}
+
+
+
+.table_head {
+    border-top: 1px solid #eaecec;
+    border-bottom: 1px solid #eaecec;
+    background-color: #d2e8f5 !important;
+    display: block;
+}
+
+.table_head tr th {
+    white-space: nowrap;
+    border-color: #c5c5c5;
+    font-size: 12px;
+    height: 30px;
+    word-wrap: break-word;
+    padding: 0.5rem 0.5rem;
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+}
+
+.table_body {
+    display: block;
+    background-color: #fff;
+}
+
+.table_body tr {
+    display: flex;
+    cursor: pointer;
+}
+
+.table_body tr td {
+
+    border-color: #c5c5c5;
+    font-size: 12px;
+    height: 30px;
+    word-wrap: break-word;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 50px;
+    padding: 0.5rem 0.5rem;
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+}
+
+.flexGrow {
+    flex-grow: 1;
+}
+
+.selected_row {
+    background-color: #f4f0e9;
+    font-weight: 700;
+}

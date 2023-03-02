@@ -2,7 +2,7 @@ import React from 'react'
 import styles from "./InputVariants.module.css"
 const InputVariant1 = (props) => {
     return (
-        <div>InputVariant1
+        <div className={styles.varriant1}>
             <input
                 style={{ color: props.variantThemeColor }}
                 onKeyDown={props.handleOnKeyDown}
@@ -12,10 +12,20 @@ const InputVariant1 = (props) => {
                 id={`superSearchInputField_${props.variantID}`}
                 type="text"
                 autoComplete="off"
-                className="col yellowsearch"
+                className={styles.varriant1_input}
                 placeholder={props.variantPlaceholder}
             />
-            {props.variantSearchIcon}
+            {!props.variantDisabled ? (
+                props.searchValue ? (
+                    <button className={styles.varriant1_icon} onClick={props.resetComponent}>
+                        {props.variantCrossIcon}
+                    </button>
+                ) : (
+                    <button className={styles.varriant1_icon}>
+                        {props.variantSearchIcon}
+                    </button>
+                )
+            ) : null}
 
         </div>
     )

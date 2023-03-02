@@ -35,7 +35,7 @@ class App extends Component {
           <li>
             <Link to="/" >Home</Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/growthchart" >Growth chart</Link>
           </li>
           <li>
@@ -89,22 +89,22 @@ class App extends Component {
           </li>
           <li>
             <Link to="/super-popup" >Super Popup</Link>
-          </li> */}
+          </li>
           <li>
             <Link to="/supersearch" >Super Search</Link>
           </li>
           <li>
             <Link to="/react-grid" >Reat Grid</Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/react-tree-checkbox" >Reat Tree Checkbox</Link>
-          </li> */}
-          {/* <li>
+          </li>
+          <li>
             <Link to="/pagination" >Pagination</Link>
-          </li> */}
-          {/* <li>
+          </li>
+          <li>
             <Link to="/portal" >Portal</Link>
-          </li> */}
+          </li>
         </ul>
         <Switch>
           <Route path="/" exact>
